@@ -22,7 +22,6 @@ namespace Santorini___ISProjekat
         private PictureBox[][] tableView;
         private Game g;
         private GameFigure selected;
-        private GameMove currentMove;
         private bool moved;
         private Timer timer;
 
@@ -260,7 +259,11 @@ namespace Santorini___ISProjekat
                     }
                     else
                     {
-                        if (!moved)
+                        if (selected.OnSpot(i, j) && !moved)
+                        {
+                            selected = null;
+                        }
+                        else if (!moved)
                         {
                             moved = g.MoveFigure(selected, i, j);                         
                         }

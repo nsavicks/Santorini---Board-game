@@ -25,20 +25,12 @@ namespace etf.santorini.sn160078d
             int bestValue = (currentDepth % 2 == 0) ? int.MinValue : int.MaxValue;
             GameMove moveToPlay = null;
 
-            /*foreach (GameMove newMove in moves)
-            {
-                System.Console.Write(newMove + "|");
-            }
-            System.Console.WriteLine(); */
-
             foreach (GameMove newMove in moves)
             {
-                Game.GameState prev = g.State;
                 g.PlayMove(newMove);
                 Tuple<int, GameMove> ret = PlayNextMove(g, newMove, currentDepth + 1);
                 int retVal = ret.Item1;
                 g.UndoMove(newMove);
-                if (prev != g.State) System.Console.WriteLine("NIJE ISTO");
                 if (currentDepth % 2 == 0)
                 {
                     if (retVal >= bestValue)
@@ -56,8 +48,6 @@ namespace etf.santorini.sn160078d
                     }
                 }
             }
-
-            //g.PlayMove(moveToPlay);
 
             return Tuple.Create<int, GameMove>(bestValue, moveToPlay);
         }

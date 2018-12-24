@@ -79,6 +79,18 @@ namespace etf.santorini.sn160078d
             }
         }
 
+        private void previousState()
+        {
+            if (this.moves.Count != 0)
+            {
+                this.state = this.moves.Last().GameState;
+            }
+            else
+            {
+                this.state = GameState.WaitingForPlayer1ToPlaceFigure1;
+            }
+        }
+
         public GamePlayer GetCurrentPlayer()
         {
             return players[turn];
@@ -172,21 +184,14 @@ namespace etf.santorini.sn160078d
             else
             {
                 GameFigure figure = this.table.FigureAt(newMove.ToI, newMove.ToJ);
-                figure.MoveTo(newMove.FromI, newMove.FromJ);
                 this.table.Unbuild(newMove.BuildI, newMove.BuildJ);
+                figure.MoveTo(newMove.FromI, newMove.FromJ);
             }
 
-            this.moves.RemoveAt(this.moves.Count - 1);
             nextTurn();
-            if (this.moves.Count != 0)
-            {
-                this.state = this.moves.Last().GameState;
-            }
-            else
-            {
-                this.state = GameState.WaitingForPlayer1ToPlaceFigure1;
-            }
-                
+            previousState();
+
+            this.moves.RemoveAt(this.moves.Count - 1);
         }
 
         public void PlayNext()
