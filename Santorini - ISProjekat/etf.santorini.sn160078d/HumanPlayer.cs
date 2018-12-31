@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace etf.santorini.sn160078d
 {
+    /// <summary>
+    /// Class that represents Human player in Santorini game
+    /// </summary>
     public class HumanPlayer : GamePlayer
     {
         public HumanPlayer(int pt) : base(pt)
@@ -14,9 +17,9 @@ namespace etf.santorini.sn160078d
             this.type = PlayerType.Human;
         }
 
-        public override void PlayNextMove(Game table)
+        public override int PlayNextMove(Game table)
         {
-            throw new NotImplementedException();
+            return 0;
         }
 
     }

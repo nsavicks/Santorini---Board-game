@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace etf.santorini.sn160078d
 {
+    /// <summary>
+    /// Class that represents one move in game Santorini
+    /// </summary>
     public class GameMove
     {
         private readonly MoveType type;
@@ -23,6 +26,18 @@ namespace etf.santorini.sn160078d
         public MoveType Type => type;
         public Game.GameState GameState => gameState;
 
+        /// <summary>
+        /// Ctor for game move
+        /// </summary>
+        /// <param name="type">Enum type of game move</param>
+        /// <param name="fromI">Row from which we moved figure</param>
+        /// <param name="fromJ">Column from which we move figure</param>
+        /// <param name="toI">Row to which we moved/placed figure</param>
+        /// <param name="toJ">Column to which we moved/placed figure</param>
+        /// <param name="buildI">Row to which we built</param>
+        /// <param name="buildJ">Column to which we built</param>
+        /// <param name="player">Player's turn who made move</param>
+        /// <param name="gameState">In which state was game before move is played</param>
         public GameMove(MoveType type, int fromI, int fromJ, int toI, int toJ, int buildI, int buildJ, int player, Game.GameState gameState)
         {
             this.type = type;
@@ -36,6 +51,12 @@ namespace etf.santorini.sn160078d
             this.gameState = gameState;
         }
 
+        /// <summary>
+        /// Ctor for getting game move from string
+        /// </summary>
+        /// <param name="move">String that represents game move</param>
+        /// <param name="player">Player's turn who made move</param>
+        /// <param name="gameState">In which state was game before move is played</param>
         public GameMove(string move, int player, Game.GameState gameState)
         {
             if (move.Length == 2)
@@ -59,6 +80,10 @@ namespace etf.santorini.sn160078d
             this.gameState = gameState;
         }
 
+        /// <summary>
+        /// String representation of  move
+        /// </summary>
+        /// <returns>String representation of move</returns>
         public override string ToString()
         {
             string sol = "";
@@ -83,6 +108,9 @@ namespace etf.santorini.sn160078d
             return sol;
         }
 
+        /// <summary>
+        /// Enum that represents type of moves in Santorini game
+        /// </summary>
         public enum MoveType
         {
             FigurePlacement,

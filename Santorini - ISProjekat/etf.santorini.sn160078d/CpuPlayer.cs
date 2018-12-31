@@ -6,12 +6,21 @@ using System.Threading.Tasks;
 
 namespace etf.santorini.sn160078d
 {
+    /// <summary>
+    /// Interface for CPU Player
+    /// </summary>
     public class CpuPlayer : GamePlayer
     {
 
         private Strategy strat;
         private int depth;
 
+        /// <summary>
+        /// Ctor for CPUPlayer class
+        /// </summary>
+        /// <param name="type">Player type</param>
+        /// <param name="pt">Player turn</param>
+        /// <param name="depth">Depth for minimax tree</param>
         public CpuPlayer(PlayerType type, int pt, int depth): base(pt)
         {
             this.type = type;
@@ -33,11 +42,16 @@ namespace etf.santorini.sn160078d
 
         public int Depth { get => depth; set => depth = value; }
 
-        public override void PlayNextMove(Game g)
+        /// <summary>
+        /// Method for getting and playing next move on game
+        /// </summary>
+        /// <param name="g">Game on which to play next move</param>
+        public override int PlayNextMove(Game g)
         {
             Tuple<int, GameMove> ret = this.strat.PlayNextMove(g, null, 0, int.MinValue, int.MaxValue);
             System.Console.WriteLine("Best value is " + ret.Item1);
             g.PlayMove(ret.Item2, false);
+            return ret.Item1;
         }
     }
 }

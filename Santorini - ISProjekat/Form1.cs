@@ -26,6 +26,7 @@ namespace etf.santorini.sn160078d
         private GameFigure selected;
         private bool moved;
         private Timer timer;
+        private int evaluationP1, evaluationP2;
 
         public Form1()
         {
@@ -160,6 +161,43 @@ namespace etf.santorini.sn160078d
                         
                     }
                 }
+
+            if (g.GetPlayer(0).Type != GamePlayer.PlayerType.Human)
+            {
+                string toAdd;
+                if (this.evaluationP1 == int.MaxValue)
+                {
+                    toAdd = "INT_MAX";
+                }
+                else if (this.evaluationP1 == int.MinValue)
+                {
+                    toAdd = "INT_MIN";
+                }
+                else
+                {
+                    toAdd = this.evaluationP1.ToString();
+                }
+                this.lbP1.Text = "Best move MINIMAX value: " + toAdd;
+            }
+
+            if (g.GetPlayer(1).Type != GamePlayer.PlayerType.Human)
+            {
+                string toAdd;
+                if (this.evaluationP2 == int.MaxValue)
+                {
+                    toAdd = "INT_MAX";
+                }
+                else if (this.evaluationP2 == int.MinValue)
+                {
+                    toAdd = "INT_MIN";
+                }
+                else
+                {
+                    toAdd = this.evaluationP2.ToString();
+                }
+                this.lbP2.Text = "Best move MINIMAX value: " + toAdd;
+            }
+
             int turn = g.Turn + 1;
             lbPlayersTurn.Text = "Players turn: " + turn.ToString();
             lbGameState.Text = "Game state: " + g.State.ToString();
@@ -216,12 +254,14 @@ namespace etf.santorini.sn160078d
                 btnP1Next.Enabled = false;
                 depthP1.Enabled = false;
                 stepP1.Enabled = false;
+                lbP1.Visible = false;
             }
             else
             {
                 btnP1Next.Enabled = true;
                 depthP1.Enabled = true;
                 stepP1.Enabled = true;
+                lbP1.Visible = true;
             }
         }
 
@@ -232,12 +272,14 @@ namespace etf.santorini.sn160078d
                 btnP2Next.Enabled = false;
                 depthP2.Enabled = false;
                 stepP2.Enabled = false;
+                lbP2.Visible = false;
             }
             else
             {
                 btnP2Next.Enabled = true;
                 depthP2.Enabled = true;
                 stepP2.Enabled = true;
+                lbP2.Visible = true;
             }
         }
 
@@ -474,7 +516,7 @@ namespace etf.santorini.sn160078d
 
                 if (g.GetPlayer(0).Type != GamePlayer.PlayerType.Human && g.Turn == 0)
                 {
-                    g.PlayNext();
+                    this.evaluationP1 = g.PlayNext();
                     RefreshTableView();
                     this.timer.Start();
                 }
@@ -493,7 +535,7 @@ namespace etf.santorini.sn160078d
 
                 if (g.GetPlayer(1).Type != GamePlayer.PlayerType.Human && g.Turn == 1)
                 {
-                    g.PlayNext();
+                    this.evaluationP2 = g.PlayNext();
                     RefreshTableView();
                     this.timer.Start();
                 }
@@ -508,6 +550,8 @@ namespace etf.santorini.sn160078d
         private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             g = new Game(getPlayers());
+            this.evaluationP1 = 0;
+            this.evaluationP2 = 0;
             RefreshTableView();
             timer.Start();
         }
@@ -517,6 +561,8 @@ namespace etf.santorini.sn160078d
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 g = new Game(getPlayers());
+                this.evaluationP1 = 0;
+                this.evaluationP2 = 0;
                 g.LoadGame(openFileDialog1.FileName);
 
                 RefreshTableView();

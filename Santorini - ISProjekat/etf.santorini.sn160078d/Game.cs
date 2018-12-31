@@ -9,6 +9,9 @@ using System.Windows.Forms;
 
 namespace etf.santorini.sn160078d
 {
+    /// <summary>
+    /// Class that represents main gameplay of Santorini game
+    /// </summary>
     public class Game
     {
         private GameState state;
@@ -19,6 +22,10 @@ namespace etf.santorini.sn160078d
         private int turn;
         private int winner;
 
+        /// <summary>
+        /// Ctor for Game class 
+        /// </summary>
+        /// <param name="players">Players that will play game</param>
         public Game(GamePlayer[] players)
         {
             this.players = players;
@@ -35,6 +42,10 @@ namespace etf.santorini.sn160078d
         public int Turn { get => turn; set => turn = value; }
         public int Winner { get => winner; set => winner = value; }
 
+        /// <summary>
+        /// Method for loading game from file
+        /// </summary>
+        /// <param name="file">Filepath from which to load game</param>
         public void LoadGame(string file)
         {
             using (StreamReader sr = new StreamReader(file))
@@ -72,6 +83,10 @@ namespace etf.santorini.sn160078d
             }
         }
 
+        /// <summary>
+        /// Method for saving game
+        /// </summary>
+        /// <param name="file">Filepath to file in which to save game</param>
         public void SaveGame(string file = null)
         {
             DateTime time = DateTime.UtcNow;
@@ -120,12 +135,18 @@ namespace etf.santorini.sn160078d
             
         }
 
+        /// <summary>
+        /// Change to next player turn
+        /// </summary>
         private void nextTurn()
         {
             turn++;
             turn %= 2;
         }
 
+        /// <summary>
+        /// Change to next game state
+        /// </summary>
         private void nextState()
         {
             if (this.state == GameState.Finished) return;
@@ -144,6 +165,9 @@ namespace etf.santorini.sn160078d
             }
         }
 
+        /// <summary>
+        /// Change to previous game state
+        /// </summary>
         private void previousState()
         {
             if (this.moves.Count != 0)
@@ -156,24 +180,39 @@ namespace etf.santorini.sn160078d
             }
         }
 
+        /// <summary>
+        /// Get player that is currently on move
+        /// </summary>
+        /// <returns>Player currently on move</returns>
         public GamePlayer GetCurrentPlayer()
         {
             return players[turn];
         }
 
-        public GamePlayer GetPlayer(int i)
+        /// <summary>
+        /// Get player for given player turn
+        /// </summary>
+        /// <param name="pt">Player turn</param>
+        /// <returns></returns>
+        public GamePlayer GetPlayer(int pt)
         {
-            return this.players[i];
+            return this.players[pt];
         }
         
-        public bool PlaceFigure(int x, int y)
+        /// <summary>
+        /// Method for placing figure in game
+        /// </summary>
+        /// <param name="i">Row of game table</param>
+        /// <param name="j">Column of game table</param>
+        /// <returns></returns>
+        public bool PlaceFigure(int i, int j)
         {
-            if (table.IsFreeSpot(x, y) && x >= 0 && x <= 4 && y >= 0 && y <= 4)
+            if (table.IsFreeSpot(i, j) && i >= 0 && i <= 4 && j >= 0 && j <= 4)
             {
-                GameFigure f = new GameFigure(x, y);
+                GameFigure f = new GameFigure(i, j);
 
                 players[turn].PlaceFigure(table, f);
-                this.moves.Add(new GameMove(GameMove.MoveType.FigurePlacement, -1, -1, x, y, -1, -1, this.turn, this.state));
+                this.moves.Add(new GameMove(GameMove.MoveType.FigurePlacement, -1, -1, i, j, -1, -1, this.turn, this.state));
 
                 nextTurn();
                 nextState();
@@ -184,13 +223,21 @@ namespace etf.santorini.sn160078d
             return false;
         }
 
+        /// <summary>
+        /// Method for moving figure in game
+        /// </summary>
+        /// <param name="selected">Figure to move</param>
+        /// <param name="i">Row of game table where to move figure</param>
+        /// <param name="j">Column of game table where to move figure</param>
+        /// <param name="minimax">If this method is called from minimax algorithm or real move</param>
+        /// <returns></returns>
         public bool MoveFigure(GameFigure selected, int i, int j, bool minimax)
         {
 
             if (players[turn].PlayersFigure(selected) && table.ValidMove(selected, i, j))
             {
 
-                this.currentMove = new GameMove(GameMove.MoveType.FigureMovingAndBuilding, selected.X, selected.Y, i, j, -1, -1, this.turn, this.state);
+                this.currentMove = new GameMove(GameMove.MoveType.FigureMovingAndBuilding, selected.I, selected.J, i, j, -1, -1, this.turn, this.state);
                 selected.MoveTo(i, j);
 
                 if ((this.winner = this.table.CheckFinished(turn)) != 0)
@@ -208,7 +255,15 @@ namespace etf.santorini.sn160078d
 
             return false;
         }
-    
+
+        /// <summary>
+        /// Method for building in game
+        /// </summary>
+        /// <param name="selected">Figure which builds</param>
+        /// <param name="i">Row of game table where to build</param>
+        /// <param name="j">Column of game table where to build</param>
+        /// <param name="minimax">If this method is called from minimax algorithm or real move</param>
+        /// <returns></returns>
         public bool Build(GameFigure selected, int i, int j, bool minimax)
         {
             if (players[turn].PlayersFigure(selected) && table.ValidBuild(selected, i, j))
@@ -236,6 +291,11 @@ namespace etf.santorini.sn160078d
             return false;
         }
 
+        /// <summary>
+        /// Method for playing given move on this game
+        /// </summary>
+        /// <param name="moveToPlay">Move to be played</param>
+        /// <param name="minimax">If this method is called from minimax algorithm or real move</param>
         public void PlayMove(GameMove moveToPlay, bool minimax)
         {
             if (moveToPlay == null) return;
@@ -252,7 +312,10 @@ namespace etf.santorini.sn160078d
             }
         }
 
-        public void UndoMove(GameMove newMove)
+        /// <summary>
+        /// Method to undo last move
+        /// </summary>
+        public void UndoMove()
         {
             if (this.moves.Count == 0) return;
 
@@ -278,16 +341,27 @@ namespace etf.santorini.sn160078d
             this.moves.RemoveAt(this.moves.Count - 1);
         }
 
-        public void PlayNext()
+        /// <summary>
+        /// Method to call player who's turn is it to play next move
+        /// </summary>
+        /// <returns>Evaluation of move</returns>
+        public int PlayNext()
         {
-            this.players[turn].PlayNextMove(this);
+            return this.players[turn].PlayNextMove(this);
         }
 
+        /// <summary>
+        /// Mehtod to check if game is finished
+        /// </summary>
+        /// <returns>True if game is finished</returns>
         public bool IsFinished()
         {
             return this.state == GameState.Finished;
         }
 
+        /// <summary>
+        /// Enum that represents game states
+        /// </summary>
         public enum GameState
         {
             WaitingForPlayer1ToPlaceFigure1,

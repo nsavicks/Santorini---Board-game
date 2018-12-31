@@ -78,6 +78,8 @@ namespace etf.santorini.sn160078d
             this.stepP2 = new System.Windows.Forms.CheckBox();
             this.pictureBox26 = new System.Windows.Forms.PictureBox();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.lbP2 = new System.Windows.Forms.Label();
+            this.lbP1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox24)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox23)).BeginInit();
@@ -580,6 +582,7 @@ namespace etf.santorini.sn160078d
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.lbP1);
             this.groupBox1.Controls.Add(this.stepP1);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.btnP1Next);
@@ -608,6 +611,7 @@ namespace etf.santorini.sn160078d
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.lbP2);
             this.groupBox2.Controls.Add(this.stepP2);
             this.groupBox2.Controls.Add(this.comboBox2);
             this.groupBox2.Controls.Add(this.depthP2);
@@ -615,7 +619,7 @@ namespace etf.santorini.sn160078d
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.groupBox2.Location = new System.Drawing.Point(37, 347);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(289, 128);
+            this.groupBox2.Size = new System.Drawing.Size(289, 129);
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Player 2";
@@ -645,6 +649,28 @@ namespace etf.santorini.sn160078d
             // saveFileDialog1
             // 
             this.saveFileDialog1.Filter = "TXT files|*.txt";
+            // 
+            // lbP2
+            // 
+            this.lbP2.AutoSize = true;
+            this.lbP2.Font = new System.Drawing.Font("Poor Richard", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbP2.Location = new System.Drawing.Point(27, 102);
+            this.lbP2.Name = "lbP2";
+            this.lbP2.Size = new System.Drawing.Size(184, 19);
+            this.lbP2.TabIndex = 18;
+            this.lbP2.Text = "Best move MINIMAX value:  ";
+            this.lbP2.Visible = false;
+            // 
+            // lbP1
+            // 
+            this.lbP1.AutoSize = true;
+            this.lbP1.Font = new System.Drawing.Font("Poor Richard", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbP1.Location = new System.Drawing.Point(27, 105);
+            this.lbP1.Name = "lbP1";
+            this.lbP1.Size = new System.Drawing.Size(184, 19);
+            this.lbP1.TabIndex = 19;
+            this.lbP1.Text = "Best move MINIMAX value:  ";
+            this.lbP1.Visible = false;
             // 
             // Form1
             // 
@@ -754,6 +780,8 @@ namespace etf.santorini.sn160078d
         private System.Windows.Forms.CheckBox stepP2;
         private System.Windows.Forms.PictureBox pictureBox26;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Label lbP1;
+        private System.Windows.Forms.Label lbP2;
     }
 }
 

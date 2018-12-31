@@ -6,28 +6,47 @@ using System.Threading.Tasks;
 
 namespace etf.santorini.sn160078d
 {
+    /// <summary>
+    /// Class that represents figure in Santorini game
+    /// </summary>
     public class GameFigure
     {
-        private int x, y;
+        private int i, j;
 
-        public GameFigure(int x, int y)
+        /// <summary>
+        /// Ctor for game figure
+        /// </summary>
+        /// <param name="x">Row where to place figure on game table</param>
+        /// <param name="y">Column where to place figure on game table</param>
+        public GameFigure(int i, int j)
         {
-            this.x = x;
-            this.y = y;
+            this.i = i;
+            this.j = j;
         }
 
-        public int X { get => x; set => x = value; }
-        public int Y { get => y; set => y = value; }
+        public int I { get => i; set => i = value; }
+        public int J { get => j; set => j = value; }
 
-        public void MoveTo(int nx, int ny)
+        /// <summary>
+        /// Method for moving game figure 
+        /// </summary>
+        /// <param name="ni">Row where to move figure</param>
+        /// <param name="nj">Column where to move figure</param>
+        public void MoveTo(int ni, int nj)
         {
-            this.x = nx;
-            this.y = ny;
+            this.i = ni;
+            this.j = nj;
         }
 
-        public bool OnSpot(int x, int y)
+        /// <summary>
+        /// Method for checking if figure is on this spot
+        /// </summary>
+        /// <param name="i">Row of spot</param>
+        /// <param name="j">Column of spot</param>
+        /// <returns>True if figure is on given spot</returns>
+        public bool OnSpot(int i, int j)
         {
-            if (this.x == x && this.y == y) return true;
+            if (this.i == i && this.j == j) return true;
             else return false;
         }
     }

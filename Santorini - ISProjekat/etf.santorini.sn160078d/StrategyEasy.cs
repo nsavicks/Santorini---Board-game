@@ -6,12 +6,29 @@ using System.Threading.Tasks;
 
 namespace etf.santorini.sn160078d
 {
+    /// <summary>
+    /// Class that represents easy strategy for CPU player
+    /// </summary>
     public class StrategyEasy : Strategy
     {
+        /// <summary>
+        /// Default ctor for strategy easy
+        /// </summary>
+        /// <param name="depth">Depth of minimax tree</param>
+        /// <param name="playerTurn">Players turn for which we are creating minimax tree</param>
         public StrategyEasy(int depth, int playerTurn) : base(depth, playerTurn)
         {
         }
 
+        /// <summary>
+        /// Method that plays next move
+        /// </summary>
+        /// <param name="g">Game on which to play move</param>
+        /// <param name="move">Move to be played</param>
+        /// <param name="currentDepth">Current depth of minimax tree</param>
+        /// <param name="alpha">Alpha value for alpha-beta prunnig</param>
+        /// <param name="beta">Beta value for alpha-beta prunnig</param>
+        /// <returns>First value - godness of move to be played, second value - move to play</returns>
         public override Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth, int alpha, int beta)
         {
             if (currentDepth == this.depth)
@@ -30,7 +47,7 @@ namespace etf.santorini.sn160078d
                 g.PlayMove(newMove, true);
                 Tuple<int, GameMove> ret = PlayNextMove(g, newMove, currentDepth + 1, alpha, beta);
                 int retVal = ret.Item1;
-                g.UndoMove(newMove);
+                g.UndoMove();
                 if (currentDepth % 2 == 0)
                 {
                     if (retVal >= bestValue)
@@ -52,6 +69,12 @@ namespace etf.santorini.sn160078d
             return Tuple.Create<int, GameMove>(bestValue, moveToPlay);
         }
 
+        /// <summary>
+        /// Method to evaluate move on game
+        /// </summary>
+        /// <param name="g">Game on which move to be evaluated</param>
+        /// <param name="move">Move to be evaluated</param>
+        /// <returns>Evaluation of move</returns>
         protected override int EvaluateMove(Game g, GameMove move)
         {
             if (move == null || g == null) return 0;
@@ -67,8 +90,8 @@ namespace etf.santorini.sn160078d
             GamePlayer me = g.GetPlayer(this.playerTurn);
             GamePlayer op = g.GetPlayer((this.playerTurn + 1) % 2);
 
-            int myDistance = Math.Max(Math.Abs(me.Figures[0].X - move.BuildI), Math.Abs(me.Figures[0].Y - move.BuildJ)) + Math.Max(Math.Abs(me.Figures[1].X - move.BuildI), Math.Abs(me.Figures[1].Y - move.BuildJ));
-            int opDistance = Math.Max(Math.Abs(op.Figures[0].X - move.BuildI), Math.Abs(op.Figures[0].Y - move.BuildJ)) + Math.Max(Math.Abs(op.Figures[1].X - move.BuildI), Math.Abs(op.Figures[1].Y - move.BuildJ));
+            int myDistance = Math.Max(Math.Abs(me.Figures[0].I - move.BuildI), Math.Abs(me.Figures[0].J - move.BuildJ)) + Math.Max(Math.Abs(me.Figures[1].I - move.BuildI), Math.Abs(me.Figures[1].J - move.BuildJ));
+            int opDistance = Math.Max(Math.Abs(op.Figures[0].I - move.BuildI), Math.Abs(op.Figures[0].J - move.BuildJ)) + Math.Max(Math.Abs(op.Figures[1].J - move.BuildI), Math.Abs(op.Figures[1].J - move.BuildJ));
 
             int l = ((g.Table.GetTableValueAt(move.BuildI, move.BuildJ))[0] + 1) * (opDistance - myDistance);
 
