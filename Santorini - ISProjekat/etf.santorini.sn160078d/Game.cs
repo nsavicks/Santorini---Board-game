@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -29,31 +30,95 @@ namespace etf.santorini.sn160078d
             this.State = GameState.WaitingForPlayer1ToPlaceFigure1;
         }
 
-        /*public Game(Game copy)
-        {
-            this.players = new GamePlayer[2];
-            this.players[0] = GamePlayer.CreateCopy(copy.players[0]);
-            this.players[1] = GamePlayer.CreateCopy(copy.players[1]);
-            this.turn = copy.turn;
-            this.winner = copy.winner;
-            this.moves = new List<GameMove>();
-            foreach (GameMove move in copy.moves)
-            {
-                this.moves.Add(new GameMove(move.Type, move.FromI, move.FromJ, move.ToI, move.ToJ, move.BuildI, move.BuildJ, move.Player));
-            }
-            this.table = GameTable.CreateCopy(copy.table);
-            this.table.SetFigure(this.players[0].Figures[0], 0, 0);
-            this.table.SetFigure(this.players[0].Figures[1], 0, 1);
-            this.table.SetFigure(this.players[1].Figures[0], 1, 0);
-            this.table.SetFigure(this.players[1].Figures[1], 1, 1);
-            this.state = copy.state;
-        }
-        */
-
         public GameState State { get => state; set => state = value; }
         public GameTable Table { get => table; set => table = value; }
         public int Turn { get => turn; set => turn = value; }
         public int Winner { get => winner; set => winner = value; }
+
+        public void LoadGame(string file)
+        {
+            using (StreamReader sr = new StreamReader(file))
+            {
+                string line;
+                string player1Figure2 = null, player2Figure2 = null;
+                GameMove move;
+
+                while ((line = sr.ReadLine()) != null)
+                {             
+
+                    if (this.state == GameState.WaitingForPlayer1ToPlaceFigure2)
+                    {
+                        move = new GameMove(player1Figure2, this.turn, this.state);
+                        this.PlayMove(move, false);
+                    }
+                    
+                    if (this.state == GameState.WaitingForPlayer2ToPlaceFigure2)
+                    {
+                        move = new GameMove(player2Figure2, this.turn, this.state);
+                        this.PlayMove(move, false);
+                    }
+
+                    if (line.Length == 5)
+                    {
+                        if (this.state == GameState.WaitingForPlayer1ToPlaceFigure1) player1Figure2 = line.Substring(3);
+                        if (this.state == GameState.WaitingForPlayer2ToPlaceFigure1) player2Figure2 = line.Substring(3);
+
+                        line = line.Substring(0, 2);
+                    }
+
+                    move = new GameMove(line, this.turn, this.state);
+                    this.PlayMove(move, false);
+                }
+            }
+        }
+
+        public void SaveGame(string file = null)
+        {
+            DateTime time = DateTime.UtcNow;
+            string folder = "GameSaves";
+            string fileName = "SaveID-" + time.ToString().Replace(':', '-') + ".txt";
+            string path = Path.Combine(folder, fileName);
+
+            Directory.CreateDirectory(folder);
+
+            if (file != null) path = file;
+
+            using (FileStream fs = File.Create(path))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    string firstLine = "";
+                    string secondLine = "";
+
+                    for (int i = 0; i <= 3; i++)
+                    {
+                        if (this.moves.Count > i)
+                        {
+                            if (i % 2 == 0)
+                            {
+                                if (i == 2) firstLine += " ";
+                                firstLine += this.moves[i].ToString();
+                            }
+                            else
+                            {
+                                if (i == 3) secondLine += " ";
+                                secondLine += this.moves[i].ToString();
+                            }
+                        }
+                    }
+
+                    sw.WriteLine(firstLine);
+                    sw.WriteLine(secondLine);
+
+                    for (int i = 4; i < this.moves.Count; i++)
+                    {
+                        sw.WriteLine(this.moves[i].ToString());
+                    }
+
+                }
+            }
+            
+        }
 
         private void nextTurn()
         {
@@ -101,9 +166,9 @@ namespace etf.santorini.sn160078d
             return this.players[i];
         }
         
-        public void PlaceFigure(int x, int y)
+        public bool PlaceFigure(int x, int y)
         {
-            if (table.IsFreeSpot(x, y))
+            if (table.IsFreeSpot(x, y) && x >= 0 && x <= 4 && y >= 0 && y <= 4)
             {
                 GameFigure f = new GameFigure(x, y);
 
@@ -112,10 +177,14 @@ namespace etf.santorini.sn160078d
 
                 nextTurn();
                 nextState();
-            }       
+
+                return true;
+            }
+
+            return false;
         }
 
-        public bool MoveFigure(GameFigure selected, int i, int j)
+        public bool MoveFigure(GameFigure selected, int i, int j, bool minimax)
         {
 
             if (players[turn].PlayersFigure(selected) && table.ValidMove(selected, i, j))
@@ -126,6 +195,11 @@ namespace etf.santorini.sn160078d
 
                 if ((this.winner = this.table.CheckFinished(turn)) != 0)
                 {
+                    if (!minimax)
+                    {
+                        this.moves.Add(this.currentMove);
+                        this.SaveGame();
+                    }
                     this.state = GameState.Finished;
                 }
 
@@ -134,8 +208,8 @@ namespace etf.santorini.sn160078d
 
             return false;
         }
-
-        public bool Build(GameFigure selected, int i, int j)
+    
+        public bool Build(GameFigure selected, int i, int j, bool minimax)
         {
             if (players[turn].PlayersFigure(selected) && table.ValidBuild(selected, i, j))
             {
@@ -149,6 +223,10 @@ namespace etf.santorini.sn160078d
 
                 if ((this.winner = this.table.CheckFinished(turn)) != 0)
                 {
+                    if (!minimax)
+                    {
+                        this.SaveGame();
+                    }
                     this.state = GameState.Finished;
                 }
 
@@ -158,7 +236,7 @@ namespace etf.santorini.sn160078d
             return false;
         }
 
-        public void PlayMove(GameMove moveToPlay)
+        public void PlayMove(GameMove moveToPlay, bool minimax)
         {
             if (moveToPlay == null) return;
 
@@ -169,23 +247,29 @@ namespace etf.santorini.sn160078d
             else
             {
                 GameFigure figure = this.table.FigureAt(moveToPlay.FromI, moveToPlay.FromJ);
-                this.MoveFigure(figure, moveToPlay.ToI, moveToPlay.ToJ);
-                this.Build(figure, moveToPlay.BuildI, moveToPlay.BuildJ);
+                this.MoveFigure(figure, moveToPlay.ToI, moveToPlay.ToJ, minimax);
+                this.Build(figure, moveToPlay.BuildI, moveToPlay.BuildJ, minimax);
             }
         }
 
         public void UndoMove(GameMove newMove)
         {
-            if (newMove.Type == GameMove.MoveType.FigurePlacement)
+            if (this.moves.Count == 0) return;
+
+            GameMove lastMove = this.moves.ElementAt(this.moves.Count - 1);
+
+            //System.Console.WriteLine("Played : " + newMove.ToString() + " | Undo: " + lastMove.ToString());
+
+            if (lastMove.Type == GameMove.MoveType.FigurePlacement)
             {
-                GamePlayer player = this.GetPlayer(newMove.Player);
-                player.RemoveFigure(this.table, newMove.ToI, newMove.ToJ);
+                GamePlayer player = this.GetPlayer(lastMove.Player);
+                player.RemoveFigure(this.table, lastMove.ToI, lastMove.ToJ);
             }
             else
             {
-                GameFigure figure = this.table.FigureAt(newMove.ToI, newMove.ToJ);
-                this.table.Unbuild(newMove.BuildI, newMove.BuildJ);
-                figure.MoveTo(newMove.FromI, newMove.FromJ);
+                GameFigure figure = this.table.FigureAt(lastMove.ToI, lastMove.ToJ);
+                this.table.Unbuild(lastMove.BuildI, lastMove.BuildJ);
+                figure.MoveTo(lastMove.FromI, lastMove.FromJ);
             }
 
             nextTurn();

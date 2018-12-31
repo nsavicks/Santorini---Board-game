@@ -36,6 +36,29 @@ namespace etf.santorini.sn160078d
             this.gameState = gameState;
         }
 
+        public GameMove(string move, int player, Game.GameState gameState)
+        {
+            if (move.Length == 2)
+            {
+                this.type = MoveType.FigurePlacement;
+                this.toI = move[0] - 'A';
+                this.toJ = move[1] - '1';
+            }
+            else
+            {
+                this.type = MoveType.FigureMovingAndBuilding;
+                this.fromI = move[0] - 'A';
+                this.fromJ = move[1] - '1';
+                this.toI = move[3] - 'A';
+                this.toJ = move[4] - '1';
+                this.buildI = move[6] - 'A';
+                this.buildJ = move[7] - '1';
+            }
+
+            this.player = player;
+            this.gameState = gameState;
+        }
+
         public override string ToString()
         {
             string sol = "";

@@ -12,7 +12,7 @@ namespace etf.santorini.sn160078d
         {
         }
 
-        public override Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth)
+        public override Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth, int alpha, int beta)
         {
             throw new NotImplementedException();
         }

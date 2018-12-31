@@ -1,4 +1,4 @@
-namespace Santorini___ISProjekat
+namespace etf.santorini.sn160078d
 {
     partial class Form1
     {
@@ -28,6 +28,7 @@ namespace Santorini___ISProjekat
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox24 = new System.Windows.Forms.PictureBox();
             this.pictureBox23 = new System.Windows.Forms.PictureBox();
@@ -54,18 +55,29 @@ namespace Santorini___ISProjekat
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBox25 = new System.Windows.Forms.PictureBox();
-            this.btnNewGame = new System.Windows.Forms.Button();
             this.lbPlayersTurn = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.btnP1Next = new System.Windows.Forms.Button();
             this.btnP2Next = new System.Windows.Forms.Button();
             this.lbGameState = new System.Windows.Forms.Label();
             this.depthP1 = new System.Windows.Forms.NumericUpDown();
             this.depthP2 = new System.Windows.Forms.NumericUpDown();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.stepP1 = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.stepP2 = new System.Windows.Forms.CheckBox();
+            this.pictureBox26 = new System.Windows.Forms.PictureBox();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox24)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox23)).BeginInit();
@@ -94,11 +106,15 @@ namespace Santorini___ISProjekat
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox25)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.depthP1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.depthP2)).BeginInit();
+            this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox26)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Moccasin;
+            this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
             this.tableLayoutPanel1.ColumnCount = 5;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -130,7 +146,7 @@ namespace Santorini___ISProjekat
             this.tableLayoutPanel1.Controls.Add(this.pictureBox2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox25, 4, 4);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(381, 12);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(381, 40);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -366,86 +382,56 @@ namespace Santorini___ISProjekat
             this.pictureBox25.TabStop = false;
             this.pictureBox25.Click += new System.EventHandler(this.pictureBox25_Click);
             // 
-            // btnNewGame
-            // 
-            this.btnNewGame.Location = new System.Drawing.Point(76, 82);
-            this.btnNewGame.Name = "btnNewGame";
-            this.btnNewGame.Size = new System.Drawing.Size(267, 53);
-            this.btnNewGame.TabIndex = 1;
-            this.btnNewGame.Text = "New game";
-            this.btnNewGame.UseVisualStyleBackColor = true;
-            this.btnNewGame.Click += new System.EventHandler(this.btnNewGame_Click);
-            // 
             // lbPlayersTurn
             // 
             this.lbPlayersTurn.AutoSize = true;
-            this.lbPlayersTurn.Location = new System.Drawing.Point(106, 463);
+            this.lbPlayersTurn.BackColor = System.Drawing.Color.Transparent;
+            this.lbPlayersTurn.Font = new System.Drawing.Font("Poor Richard", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbPlayersTurn.ForeColor = System.Drawing.Color.Black;
+            this.lbPlayersTurn.Location = new System.Drawing.Point(25, 557);
             this.lbPlayersTurn.Name = "lbPlayersTurn";
-            this.lbPlayersTurn.Size = new System.Drawing.Size(68, 13);
+            this.lbPlayersTurn.Size = new System.Drawing.Size(100, 22);
             this.lbPlayersTurn.TabIndex = 2;
             this.lbPlayersTurn.Text = "Players turn: ";
             // 
             // comboBox1
             // 
+            this.comboBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "Human",
             "CPU-Easy",
             "CPU-Medium",
             "CPU-Hard"});
-            this.comboBox1.Location = new System.Drawing.Point(76, 165);
+            this.comboBox1.Location = new System.Drawing.Point(27, 33);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(155, 21);
             this.comboBox1.TabIndex = 3;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(22, 168);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Player 1:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 219);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(48, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Player 2:";
-            // 
             // comboBox2
             // 
+            this.comboBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "Human",
             "CPU-Easy",
             "CPU-Medium",
             "CPU-Hard"});
-            this.comboBox2.Location = new System.Drawing.Point(76, 216);
+            this.comboBox2.Location = new System.Drawing.Point(27, 31);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
+            this.comboBox2.Size = new System.Drawing.Size(155, 21);
             this.comboBox2.TabIndex = 5;
             this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(76, 271);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(267, 50);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Ucitaj igru";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // btnP1Next
             // 
             this.btnP1Next.Enabled = false;
-            this.btnP1Next.Location = new System.Drawing.Point(203, 159);
+            this.btnP1Next.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnP1Next.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnP1Next.Location = new System.Drawing.Point(27, 71);
             this.btnP1Next.Name = "btnP1Next";
-            this.btnP1Next.Size = new System.Drawing.Size(111, 31);
+            this.btnP1Next.Size = new System.Drawing.Size(181, 31);
             this.btnP1Next.TabIndex = 8;
             this.btnP1Next.Text = "Next move";
             this.btnP1Next.UseVisualStyleBackColor = true;
@@ -454,9 +440,11 @@ namespace Santorini___ISProjekat
             // btnP2Next
             // 
             this.btnP2Next.Enabled = false;
-            this.btnP2Next.Location = new System.Drawing.Point(203, 206);
+            this.btnP2Next.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.btnP2Next.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnP2Next.Location = new System.Drawing.Point(27, 68);
             this.btnP2Next.Name = "btnP2Next";
-            this.btnP2Next.Size = new System.Drawing.Size(111, 31);
+            this.btnP2Next.Size = new System.Drawing.Size(181, 31);
             this.btnP2Next.TabIndex = 9;
             this.btnP2Next.Text = "Next move";
             this.btnP2Next.UseVisualStyleBackColor = true;
@@ -465,21 +453,30 @@ namespace Santorini___ISProjekat
             // lbGameState
             // 
             this.lbGameState.AutoSize = true;
-            this.lbGameState.Location = new System.Drawing.Point(106, 489);
+            this.lbGameState.BackColor = System.Drawing.Color.Transparent;
+            this.lbGameState.Font = new System.Drawing.Font("Poor Richard", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbGameState.ForeColor = System.Drawing.Color.Black;
+            this.lbGameState.Location = new System.Drawing.Point(25, 599);
             this.lbGameState.Name = "lbGameState";
-            this.lbGameState.Size = new System.Drawing.Size(67, 13);
+            this.lbGameState.Size = new System.Drawing.Size(96, 22);
             this.lbGameState.TabIndex = 10;
             this.lbGameState.Text = "Game state: ";
             // 
             // depthP1
             // 
             this.depthP1.Enabled = false;
-            this.depthP1.Location = new System.Drawing.Point(320, 165);
+            this.depthP1.Location = new System.Drawing.Point(214, 78);
+            this.depthP1.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.depthP1.Name = "depthP1";
-            this.depthP1.Size = new System.Drawing.Size(55, 20);
+            this.depthP1.Size = new System.Drawing.Size(53, 20);
             this.depthP1.TabIndex = 11;
+            this.depthP1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.depthP1.Value = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -487,34 +484,182 @@ namespace Santorini___ISProjekat
             // depthP2
             // 
             this.depthP2.Enabled = false;
-            this.depthP2.Location = new System.Drawing.Point(320, 212);
-            this.depthP2.Name = "depthP2";
-            this.depthP2.Size = new System.Drawing.Size(55, 20);
-            this.depthP2.TabIndex = 12;
-            this.depthP2.Value = new decimal(new int[] {
-            10,
+            this.depthP2.Location = new System.Drawing.Point(214, 75);
+            this.depthP2.Maximum = new decimal(new int[] {
+            5,
             0,
             0,
             0});
+            this.depthP2.Name = "depthP2";
+            this.depthP2.Size = new System.Drawing.Size(55, 20);
+            this.depthP2.TabIndex = 12;
+            this.depthP2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.depthP2.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "TXT files|*.txt";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1275, 24);
+            this.menuStrip1.TabIndex = 14;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newGameToolStripMenuItem,
+            this.loadGameToolStripMenuItem,
+            this.saveGameToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // newGameToolStripMenuItem
+            // 
+            this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
+            this.newGameToolStripMenuItem.ShortcutKeyDisplayString = "F2";
+            this.newGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newGameToolStripMenuItem.Text = "New game";
+            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
+            // 
+            // loadGameToolStripMenuItem
+            // 
+            this.loadGameToolStripMenuItem.Name = "loadGameToolStripMenuItem";
+            this.loadGameToolStripMenuItem.ShortcutKeyDisplayString = "F3";
+            this.loadGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.loadGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadGameToolStripMenuItem.Text = "Load game";
+            this.loadGameToolStripMenuItem.Click += new System.EventHandler(this.loadGameToolStripMenuItem_Click);
+            // 
+            // saveGameToolStripMenuItem
+            // 
+            this.saveGameToolStripMenuItem.Name = "saveGameToolStripMenuItem";
+            this.saveGameToolStripMenuItem.ShortcutKeyDisplayString = "F4";
+            this.saveGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.saveGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.saveGameToolStripMenuItem.Text = "Save game";
+            this.saveGameToolStripMenuItem.Click += new System.EventHandler(this.saveGameToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeyDisplayString = "F5";
+            this.exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.stepP1);
+            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.btnP1Next);
+            this.groupBox1.Controls.Add(this.depthP1);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.groupBox1.Location = new System.Drawing.Point(37, 187);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(289, 128);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Player 1";
+            // 
+            // stepP1
+            // 
+            this.stepP1.AutoSize = true;
+            this.stepP1.Enabled = false;
+            this.stepP1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stepP1.Location = new System.Drawing.Point(188, 34);
+            this.stepP1.Name = "stepP1";
+            this.stepP1.Size = new System.Drawing.Size(82, 17);
+            this.stepP1.TabIndex = 12;
+            this.stepP1.Text = "Step by step";
+            this.stepP1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.stepP2);
+            this.groupBox2.Controls.Add(this.comboBox2);
+            this.groupBox2.Controls.Add(this.depthP2);
+            this.groupBox2.Controls.Add(this.btnP2Next);
+            this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox2.Location = new System.Drawing.Point(37, 347);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(289, 128);
+            this.groupBox2.TabIndex = 16;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Player 2";
+            // 
+            // stepP2
+            // 
+            this.stepP2.AutoSize = true;
+            this.stepP2.Enabled = false;
+            this.stepP2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stepP2.Location = new System.Drawing.Point(188, 32);
+            this.stepP2.Name = "stepP2";
+            this.stepP2.Size = new System.Drawing.Size(82, 17);
+            this.stepP2.TabIndex = 13;
+            this.stepP2.Text = "Step by step";
+            this.stepP2.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox26
+            // 
+            this.pictureBox26.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox26.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox26.Image")));
+            this.pictureBox26.Location = new System.Drawing.Point(12, 43);
+            this.pictureBox26.Name = "pictureBox26";
+            this.pictureBox26.Size = new System.Drawing.Size(354, 120);
+            this.pictureBox26.TabIndex = 17;
+            this.pictureBox26.TabStop = false;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "TXT files|*.txt";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1266, 732);
-            this.Controls.Add(this.depthP2);
-            this.Controls.Add(this.depthP1);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.ClientSize = new System.Drawing.Size(1275, 750);
+            this.Controls.Add(this.pictureBox26);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lbGameState);
-            this.Controls.Add(this.btnP2Next);
-            this.Controls.Add(this.btnP1Next);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.lbPlayersTurn);
-            this.Controls.Add(this.btnNewGame);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Santorini";
@@ -546,6 +691,13 @@ namespace Santorini___ISProjekat
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.depthP1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.depthP2)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox26)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -579,18 +731,29 @@ namespace Santorini___ISProjekat
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button btnNewGame;
         private System.Windows.Forms.Label lbPlayersTurn;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btnP1Next;
         private System.Windows.Forms.Button btnP2Next;
         private System.Windows.Forms.Label lbGameState;
         private System.Windows.Forms.NumericUpDown depthP1;
         private System.Windows.Forms.NumericUpDown depthP2;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.CheckBox stepP1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.CheckBox stepP2;
+        private System.Windows.Forms.PictureBox pictureBox26;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

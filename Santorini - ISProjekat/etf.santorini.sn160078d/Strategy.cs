@@ -17,7 +17,7 @@ namespace etf.santorini.sn160078d
             this.playerTurn = playerTurn;
         }
 
-        public abstract Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth); 
+        public abstract Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth, int alpha, int beta); 
 
         protected abstract int EvaluateMove(Game g, GameMove move);
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Santorini___ISProjekat
+namespace etf.santorini.sn160078d
 {
     static class Program
     {

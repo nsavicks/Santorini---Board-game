@@ -1,4 +1,6 @@
 using etf.santorini.sn160078d;
+using etf.santorini.sn160078d.Exceptions;
+using etf.santorini.sn160078d.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +16,7 @@ using Timer = System.Windows.Forms.Timer;
 // This is the code for your desktop app.
 // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
 
-namespace Santorini___ISProjekat
+namespace etf.santorini.sn160078d
 {
     public partial class Form1 : Form
     {
@@ -168,7 +170,7 @@ namespace Santorini___ISProjekat
             }
         }
 
-        private void btnNewGame_Click(object sender, EventArgs e)
+        private GamePlayer[] getPlayers()
         {
             GamePlayer[] players = new GamePlayer[2];
 
@@ -178,7 +180,7 @@ namespace Santorini___ISProjekat
                     players[0] = new HumanPlayer(0);
                     break;
                 case 1:
-                    players[0] = new CpuPlayer(GamePlayer.PlayerType.CPUEasy, 0, (int) depthP1.Value);
+                    players[0] = new CpuPlayer(GamePlayer.PlayerType.CPUEasy, 0, (int)depthP1.Value);
                     break;
                 case 2:
                     players[0] = new CpuPlayer(GamePlayer.PlayerType.CPUMedium, 0, (int)depthP1.Value);
@@ -204,11 +206,7 @@ namespace Santorini___ISProjekat
                     break;
             }
 
-            g = new Game(players);
-            RefreshTableView();
-
-            timer.Start();
-            
+            return players;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -217,11 +215,13 @@ namespace Santorini___ISProjekat
             {
                 btnP1Next.Enabled = false;
                 depthP1.Enabled = false;
+                stepP1.Enabled = false;
             }
             else
             {
                 btnP1Next.Enabled = true;
                 depthP1.Enabled = true;
+                stepP1.Enabled = true;
             }
         }
 
@@ -231,78 +231,116 @@ namespace Santorini___ISProjekat
             {
                 btnP2Next.Enabled = false;
                 depthP2.Enabled = false;
+                stepP2.Enabled = false;
             }
             else
             {
                 btnP2Next.Enabled = true;
                 depthP2.Enabled = true;
+                stepP2.Enabled = true;
             }
         }
 
         private void PictureBoxClickHandler(int i, int j, object sender, EventArgs e)
         {
-            if (g != null && g.GetPlayer(g.Turn).Type == GamePlayer.PlayerType.Human)
+            try
             {
-                if (g.State == Game.GameState.WaitingForPlayer1ToPlaceFigure1
-                    || g.State == Game.GameState.WaitingForPlayer1ToPlaceFigure2
-                     || g.State == Game.GameState.WaitingForPlayer2ToPlaceFigure1
-                     || g.State == Game.GameState.WaitingForPlayer2ToPlaceFigure2)
+                if (g == null) throw new GameNotYetStarted();
+
+                if (g.GetPlayer(g.Turn).Type == GamePlayer.PlayerType.Human)
                 {
-                    g.PlaceFigure(i, j);
-                }
-                else if (g.State == Game.GameState.WaitingForPlayer1Move || g.State == Game.GameState.WaitingForPlayer2Move)
-                {
-                    if (selected == null)
+                    if (g.State == Game.GameState.WaitingForPlayer1ToPlaceFigure1
+                        || g.State == Game.GameState.WaitingForPlayer1ToPlaceFigure2
+                         || g.State == Game.GameState.WaitingForPlayer2ToPlaceFigure1
+                         || g.State == Game.GameState.WaitingForPlayer2ToPlaceFigure2)
                     {
-                        selected = g.Table.FigureAt(i, j);
-                        if (selected != null && !g.GetCurrentPlayer().PlayersFigure(selected)) selected = null;
+                        if (!g.PlaceFigure(i, j)) throw new InvalidMove();
                     }
-                    else
+                    else if (g.State == Game.GameState.WaitingForPlayer1Move || g.State == Game.GameState.WaitingForPlayer2Move)
                     {
-                        if (selected.OnSpot(i, j) && !moved)
+                        if (selected == null)
                         {
-                            selected = null;
-                        }
-                        else if (!moved)
-                        {
-                            moved = g.MoveFigure(selected, i, j);                         
+                            selected = g.Table.FigureAt(i, j);
+                            if (selected != null && !g.GetCurrentPlayer().PlayersFigure(selected)) selected = null;
                         }
                         else
                         {
-                           if (g.Build(selected, i, j))
+                            if (selected.OnSpot(i, j) && !moved)
                             {
-                                moved = false;
                                 selected = null;
-                            }                     
+                            }
+                            else if (!moved)
+                            {
+                                moved = g.MoveFigure(selected, i, j, false);
+                                if (!moved) throw new InvalidMove();
+                            }
+                            else
+                            {
+                                if (g.Build(selected, i, j, false))
+                                {
+                                    moved = false;
+                                    selected = null;
+                                }
+                                else throw new InvalidMove();
+                            }
                         }
                     }
-                }
 
-                if (g.IsFinished())
-                {
-                    selected = null;
-                    moved = false;
-                }
-                RefreshTableView();
+                    if (g.IsFinished())
+                    {
+                        selected = null;
+                        moved = false;
+                    }
+                    RefreshTableView();
 
-                timer.Start();
+                    timer.Start();
+                }
+            
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void TimerElapsed(object sender, EventArgs e)
         {
-            if (g.GetCurrentPlayer().Type != GamePlayer.PlayerType.Human)
+            try
             {
-                if (g.Turn == 0)
+                if (g == null) throw new GameNotYetStarted();
+
+                if ((g.Turn == 0 && this.stepP1.Checked) || (g.Turn == 1 && this.stepP2.Checked))
                 {
-                    btnP1Next_Click(sender, e);
+                    this.timer.Stop();
+                    return;
+                }
+
+                if (!g.IsFinished() && g.GetCurrentPlayer().Type != GamePlayer.PlayerType.Human)
+                {
+                    if (g.Turn == 0)
+                    {
+                        btnP1Next_Click(sender, e);
+                    }
+                    else
+                    {
+                        btnP2Next_Click(sender, e);
+                    }
+
+                    this.timer.Stop();
+
+                    if (g.GetCurrentPlayer().Type != GamePlayer.PlayerType.Human) this.timer.Start();
                 }
                 else
                 {
-                    btnP2Next_Click(sender, e);
+                    this.timer.Stop();
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             PictureBoxClickHandler(0,0, sender, e);
@@ -430,20 +468,85 @@ namespace Santorini___ISProjekat
 
         private void btnP1Next_Click(object sender, EventArgs e)
         {
-            if (g.GetPlayer(0).Type != GamePlayer.PlayerType.Human && g.Turn == 0)
+            try
             {
-                g.PlayNext();
-                RefreshTableView();
+                if (g == null) throw new GameNotYetStarted();
+
+                if (g.GetPlayer(0).Type != GamePlayer.PlayerType.Human && g.Turn == 0)
+                {
+                    g.PlayNext();
+                    RefreshTableView();
+                    this.timer.Start();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void btnP2Next_Click(object sender, EventArgs e)
         {
-            if (g.GetPlayer(1).Type != GamePlayer.PlayerType.Human && g.Turn == 1)
+            try
             {
-                g.PlayNext();
-                RefreshTableView();
+                if (g == null) throw new GameNotYetStarted();
+
+                if (g.GetPlayer(1).Type != GamePlayer.PlayerType.Human && g.Turn == 1)
+                {
+                    g.PlayNext();
+                    RefreshTableView();
+                    this.timer.Start();
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+        }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            g = new Game(getPlayers());
+            RefreshTableView();
+            timer.Start();
+        }
+
+        private void loadGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                g = new Game(getPlayers());
+                g.LoadGame(openFileDialog1.FileName);
+
+                RefreshTableView();
+                timer.Start();
+            }         
+        }
+
+        private void saveGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.g == null) throw new GameNotYetStarted();
+
+                string file = null;
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    file = saveFileDialog1.FileName;
+                }
+                this.g.SaveGame(file);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

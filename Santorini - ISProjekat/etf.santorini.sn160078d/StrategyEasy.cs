@@ -12,7 +12,7 @@ namespace etf.santorini.sn160078d
         {
         }
 
-        public override Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth)
+        public override Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth, int alpha, int beta)
         {
             if (currentDepth == this.depth)
             {
@@ -27,8 +27,8 @@ namespace etf.santorini.sn160078d
 
             foreach (GameMove newMove in moves)
             {
-                g.PlayMove(newMove);
-                Tuple<int, GameMove> ret = PlayNextMove(g, newMove, currentDepth + 1);
+                g.PlayMove(newMove, true);
+                Tuple<int, GameMove> ret = PlayNextMove(g, newMove, currentDepth + 1, alpha, beta);
                 int retVal = ret.Item1;
                 g.UndoMove(newMove);
                 if (currentDepth % 2 == 0)

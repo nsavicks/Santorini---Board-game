@@ -70,27 +70,6 @@ namespace etf.santorini.sn160078d
             }
         }
 
-        public static GameTable CreateCopy(GameTable copy)
-        {
-            GameTable ret = new GameTable();
-
-            for (int i = 0; i < 5; i++)
-            {
-                for (int j = 0; j < 5; j++)
-                {
-                    ret.table[i][j] = copy.table[i][j];
-                }
-            }
-
-            ret.figures = new GameFigure[2][];
-            for(int i = 0; i < 2; i++)
-            {
-                ret.figures[i] = new GameFigure[2];
-            }
-
-            return ret;
-        }
-
         public bool ValidMove(GameFigure selected, int i, int j)
         {
             if (i < 0 || i > 4 || j < 0 || j > 4) return false;

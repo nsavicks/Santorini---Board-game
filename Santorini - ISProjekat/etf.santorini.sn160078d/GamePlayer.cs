@@ -22,37 +22,6 @@ namespace etf.santorini.sn160078d
             this.playerTurn = pt;
         }
 
-        public GamePlayer(GamePlayer copy)
-        {
-            this.figures = new GameFigure[2];
-            this.figures[0] = new GameFigure(copy.figures[0].X, copy.figures[0].Y);
-            this.figures[1] = new GameFigure(copy.figures[1].X, copy.figures[1].Y);
-            this.playerTurn = copy.playerTurn;
-        }
-
-        public static GamePlayer CreateCopy(GamePlayer copy)
-        {
-            GamePlayer ret = null;
-
-            if (copy is HumanPlayer)
-            {
-                ret = new HumanPlayer(copy.playerTurn);
-                ret.figures = new GameFigure[2];
-                if (copy.figures[0] != null) ret.figures[0] = new GameFigure(copy.figures[0].X, copy.figures[0].Y); 
-                if (copy.figures[1] != null) ret.figures[1] = new GameFigure(copy.figures[1].X, copy.figures[1].Y);
-            }
-            else
-            {
-                CpuPlayer cpu = (CpuPlayer)copy;
-                ret = new CpuPlayer(cpu.Type, cpu.playerTurn, cpu.Depth);
-                ret.figures = new GameFigure[2];
-                if (copy.figures[0] != null) ret.figures[0] = new GameFigure(copy.figures[0].X, copy.figures[0].Y);
-                if (copy.figures[1] != null) ret.figures[1] = new GameFigure(copy.figures[1].X, copy.figures[1].Y);
-            }
-
-            return ret;
-        }
-
         public void PlaceFigure(GameTable table, GameFigure f)
         {
             if (this.Figures[0] == null)
