@@ -49,7 +49,7 @@ namespace etf.santorini.sn160078d
         public override int PlayNextMove(Game g)
         {
             Tuple<int, GameMove> ret = this.strat.PlayNextMove(g, null, 0, int.MinValue, int.MaxValue);
-            System.Console.WriteLine("Best value is " + ret.Item1);
+            //System.Console.WriteLine("Best value is " + ret.Item1);
             g.PlayMove(ret.Item2, false);
             return ret.Item1;
         }

@@ -31,7 +31,7 @@ namespace etf.santorini.sn160078d
         /// <returns>First value - godness of move to be played, second value - move to play</returns>
         public override Tuple<int, GameMove> PlayNextMove(Game g, GameMove move, int currentDepth, int alpha, int beta)
         {
-            if (currentDepth == this.depth)
+            if (currentDepth == this.depth || g.IsFinished())
             {
                 int ret = EvaluateMove(g, move);
                 return Tuple.Create<int, GameMove>(ret, null);
@@ -50,7 +50,7 @@ namespace etf.santorini.sn160078d
                 g.UndoMove();
                 if (currentDepth % 2 == 0)
                 {
-                    if (retVal >= bestValue)
+                    if (retVal > bestValue)
                     {
                         bestValue = retVal;
                         moveToPlay = newMove;
@@ -58,7 +58,7 @@ namespace etf.santorini.sn160078d
                 }
                 else
                 {
-                    if (retVal <= bestValue)
+                    if (retVal < bestValue)
                     {
                         bestValue = retVal;
                         moveToPlay = newMove;
@@ -83,7 +83,7 @@ namespace etf.santorini.sn160078d
             int winner = g.Table.CheckFinished(g.Turn);
             if (winner != 0)
             {
-                if (this.playerTurn + 1 == winner) return int.MaxValue; else return int.MinValue;
+                if (this.playerTurn + 1 == winner) return 1000; else return -1000;
             }
 
             int m = (g.Table.GetTableValueAt(move.ToI, move.ToJ))[0];

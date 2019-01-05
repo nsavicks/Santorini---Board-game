@@ -227,5 +227,35 @@ namespace etf.santorini.sn160078d
             return false;
         }
 
+        public override string ToString()
+        {
+            string res = "";
+            for(int i = 0; i<5; i++)
+            {
+                for (int j = 0; j<5; j++)
+                {
+                    res += this.table[i][j];
+                    if (this.figures[0][0].OnSpot(i, j))
+                    {
+                        res += "X00X";
+                    }
+                    if (this.figures[0][1].OnSpot(i, j))
+                    {
+                        res += "X01X";
+                    }
+                    if (this.figures[1][0].OnSpot(i, j))
+                    {
+                        res += "X10X";
+                    }
+                    if (this.figures[1][1].OnSpot(i, j))
+                    {
+                        res += "X11X";
+                    }
+                }
+            }
+
+            return res;
+        }
+
     }
 }

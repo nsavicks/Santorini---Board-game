@@ -1,4 +1,5 @@
-﻿using System;
+﻿using etf.santorini.sn160078d.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -81,6 +82,7 @@ namespace etf.santorini.sn160078d
                     this.PlayMove(move, false);
                 }
             }
+
         }
 
         /// <summary>
@@ -307,6 +309,7 @@ namespace etf.santorini.sn160078d
             else
             {
                 GameFigure figure = this.table.FigureAt(moveToPlay.FromI, moveToPlay.FromJ);
+                if (figure == null) throw new InvalidMove();
                 this.MoveFigure(figure, moveToPlay.ToI, moveToPlay.ToJ, minimax);
                 this.Build(figure, moveToPlay.BuildI, moveToPlay.BuildJ, minimax);
             }
@@ -331,7 +334,10 @@ namespace etf.santorini.sn160078d
             else
             {
                 GameFigure figure = this.table.FigureAt(lastMove.ToI, lastMove.ToJ);
-                this.table.Unbuild(lastMove.BuildI, lastMove.BuildJ);
+                if (lastMove.BuildI != -1)
+                {
+                    this.table.Unbuild(lastMove.BuildI, lastMove.BuildJ);
+                }
                 figure.MoveTo(lastMove.FromI, lastMove.FromJ);
             }
 
@@ -351,12 +357,27 @@ namespace etf.santorini.sn160078d
         }
 
         /// <summary>
-        /// Mehtod to check if game is finished
+        /// Method to check if game is finished
         /// </summary>
         /// <returns>True if game is finished</returns>
         public bool IsFinished()
         {
             return this.state == GameState.Finished;
+        }
+
+        public override string ToString()
+        {
+            string res = "";
+            res += "state:" + this.state;
+            res += "table:" + this.table.ToString();
+            res += "turn:" + this.turn;
+            res += "Moves:";
+            foreach(GameMove move in this.moves)
+            {
+                res += move.ToString();
+            }
+
+            return res;
         }
 
         /// <summary>

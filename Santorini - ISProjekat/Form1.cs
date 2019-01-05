@@ -204,7 +204,7 @@ namespace etf.santorini.sn160078d
 
             if (g.State == Game.GameState.Finished)
             {
-                lbGameState.Text += " Winner is Player " + g.Winner.ToString();
+                lbGameState.Text += " - Winner is Player " + g.Winner.ToString();
             }
         }
 
@@ -588,6 +588,22 @@ namespace etf.santorini.sn160078d
                 MessageBox.Show(ex.ToString(), "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
+        }
+
+        private void btnUndo_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.g == null) throw new GameNotYetStarted();
+
+                g.UndoMove();
+
+                RefreshTableView();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Warning!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
