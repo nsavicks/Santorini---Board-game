@@ -150,6 +150,7 @@ namespace etf.santorini.sn160078d
             this.tableLayoutPanel1.Controls.Add(this.pictureBox2, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.pictureBox25, 4, 4);
+            this.tableLayoutPanel1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(381, 40);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
@@ -475,6 +476,11 @@ namespace etf.santorini.sn160078d
             0,
             0,
             0});
+            this.depthP1.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.depthP1.Name = "depthP1";
             this.depthP1.Size = new System.Drawing.Size(53, 20);
             this.depthP1.TabIndex = 11;
@@ -491,6 +497,11 @@ namespace etf.santorini.sn160078d
             this.depthP2.Location = new System.Drawing.Point(214, 75);
             this.depthP2.Maximum = new decimal(new int[] {
             5,
+            0,
+            0,
+            0});
+            this.depthP2.Minimum = new decimal(new int[] {
+            1,
             0,
             0,
             0});
