@@ -16,6 +16,11 @@ namespace etf.santorini.sn160078d
         private int depth;
 
         /// <summary>
+        /// Gets or sets depth of minimax tree
+        /// </summary>
+        public int Depth { get => depth; set => depth = value; }
+
+        /// <summary>
         /// Ctor for CPUPlayer class
         /// </summary>
         /// <param name="type">Player type</param>
@@ -38,14 +43,13 @@ namespace etf.santorini.sn160078d
                     this.strat = new StrategyHard(depth, pt);
                     break;
             }
-        }
-
-        public int Depth { get => depth; set => depth = value; }
+        }      
 
         /// <summary>
-        /// Method for getting and playing next move on game
+        /// Method for generating and playing next move
         /// </summary>
         /// <param name="g">Game on which to play next move</param>
+        /// <returns>Evaluation of played move</returns>
         public override int PlayNextMove(Game g)
         {
             Tuple<int, GameMove> ret = this.strat.PlayNextMove(g, null, 0, int.MinValue, int.MaxValue);

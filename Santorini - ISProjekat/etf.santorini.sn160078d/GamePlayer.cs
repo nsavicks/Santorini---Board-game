@@ -15,8 +15,19 @@ namespace etf.santorini.sn160078d
         protected GameFigure[] figures;
         protected int playerTurn;
 
+        /// <summary>
+        /// Gets or sets player type
+        /// </summary>
         public PlayerType Type { get => type; set => type = value; }
+
+        /// <summary>
+        /// Gets or sets player figures
+        /// </summary>
         public GameFigure[] Figures { get => figures; set => figures = value; }
+
+        /// <summary>
+        /// Gets or sets player's turn in game
+        /// </summary>
         public int PlayerTurn { get => playerTurn; set => playerTurn = value; }
 
         /// <summary>
@@ -95,12 +106,24 @@ namespace etf.santorini.sn160078d
         /// </summary>
         public enum PlayerType
         {
+            /// <summary>
+            /// Player type human
+            /// </summary>
             Human,
             
+            /// <summary>
+            /// Player type CPU easy
+            /// </summary>
             CPUEasy,
 
+            /// <summary>
+            /// Player type CPU medium
+            /// </summary>
             CPUMedium,
 
+            /// <summary>
+            /// Player type CPU hard
+            /// </summary>
             CPUHard 
         }
     }

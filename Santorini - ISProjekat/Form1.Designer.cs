@@ -118,6 +118,7 @@ namespace etf.santorini.sn160078d
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.tableLayoutPanel1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("tableLayoutPanel1.BackgroundImage")));
             this.tableLayoutPanel1.ColumnCount = 5;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -590,7 +591,7 @@ namespace etf.santorini.sn160078d
             this.groupBox1.Controls.Add(this.btnP1Next);
             this.groupBox1.Controls.Add(this.depthP1);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.groupBox1.ForeColor = System.Drawing.Color.Black;
             this.groupBox1.Location = new System.Drawing.Point(37, 187);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(289, 128);
@@ -630,6 +631,7 @@ namespace etf.santorini.sn160078d
             this.groupBox2.Controls.Add(this.depthP2);
             this.groupBox2.Controls.Add(this.btnP2Next);
             this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox2.ForeColor = System.Drawing.Color.Black;
             this.groupBox2.Location = new System.Drawing.Point(37, 347);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(289, 129);
@@ -679,6 +681,7 @@ namespace etf.santorini.sn160078d
             this.btnUndo.BackColor = System.Drawing.Color.Transparent;
             this.btnUndo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
             this.btnUndo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUndo.ForeColor = System.Drawing.Color.Black;
             this.btnUndo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnUndo.Location = new System.Drawing.Point(37, 500);
             this.btnUndo.Name = "btnUndo";
@@ -692,6 +695,7 @@ namespace etf.santorini.sn160078d
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1272, 749);
             this.Controls.Add(this.btnUndo);

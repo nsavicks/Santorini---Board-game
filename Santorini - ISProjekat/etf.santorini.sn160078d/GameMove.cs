@@ -16,14 +16,49 @@ namespace etf.santorini.sn160078d
         private readonly int player;
         private readonly Game.GameState gameState;
 
+        /// <summary>
+        /// Gets or sets row from which we moved figure
+        /// </summary>
         public int FromI { get => fromI; set => fromI = value; }
+
+        /// <summary>
+        /// Gets or sets column from which we moved figure
+        /// </summary>
         public int FromJ { get => fromJ; set => fromJ = value; }
+
+        /// <summary>
+        /// Gets or sets row to which we moved figure
+        /// </summary>
         public int ToI { get => toI; set => toI = value; }
+
+        /// <summary>
+        /// Gets or sets column to which we moved figure
+        /// </summary>
         public int ToJ { get => toJ; set => toJ = value; }
+
+        /// <summary>
+        /// Gets or sets row where we built
+        /// </summary>
         public int BuildI { get => buildI; set => buildI = value; }
+
+        /// <summary>
+        /// Gets or sets column where we built
+        /// </summary>
         public int BuildJ { get => buildJ; set => buildJ = value; }
+
+        /// <summary>
+        /// Gets player that played this move
+        /// </summary>
         public int Player => player;
+
+        /// <summary>
+        /// Gets type of move
+        /// </summary>
         public MoveType Type => type;
+
+        /// <summary>
+        /// Gets state in which was game when move was played
+        /// </summary>
         public Game.GameState GameState => gameState;
 
         /// <summary>
@@ -113,8 +148,14 @@ namespace etf.santorini.sn160078d
         /// </summary>
         public enum MoveType
         {
+            /// <summary>
+            /// Type of figure placement move
+            /// </summary>
             FigurePlacement,
 
+            /// <summary>
+            /// Type of figure moving and building move
+            /// </summary>
             FigureMovingAndBuilding,
         }
         

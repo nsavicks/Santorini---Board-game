@@ -12,12 +12,21 @@ namespace etf.santorini.sn160078d
     /// </summary>
     public class HumanPlayer : GamePlayer
     {
+        /// <summary>
+        /// Ctor for HumanPlayer
+        /// </summary>
+        /// <param name="pt"></param>
         public HumanPlayer(int pt) : base(pt)
         {
             this.type = PlayerType.Human;
         }
 
-        public override int PlayNextMove(Game table)
+        /// <summary>
+        /// Method for generating and playing next move
+        /// </summary>
+        /// <param name="g">Game on which to play next move</param>
+        /// <returns>Evaluation of played move</returns>
+        public override int PlayNextMove(Game g)
         {
             return 0;
         }

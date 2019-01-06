@@ -227,6 +227,10 @@ namespace etf.santorini.sn160078d
             return false;
         }
 
+        /// <summary>
+        /// Method for getting string representation of game table
+        /// </summary>
+        /// <returns>String representation of game table</returns>
         public override string ToString()
         {
             string res = "";

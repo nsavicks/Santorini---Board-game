@@ -14,18 +14,25 @@ namespace etf.santorini.sn160078d
         private int i, j;
 
         /// <summary>
+        /// Gets or sets row of figure place
+        /// </summary>
+        public int I { get => i; set => i = value; }
+
+        /// <summary>
+        /// Gets or sets column of figure place
+        /// </summary>
+        public int J { get => j; set => j = value; }
+
+        /// <summary>
         /// Ctor for game figure
         /// </summary>
-        /// <param name="x">Row where to place figure on game table</param>
-        /// <param name="y">Column where to place figure on game table</param>
+        /// <param name="i">Row where to place figure on game table</param>
+        /// <param name="j">Column where to place figure on game table</param>
         public GameFigure(int i, int j)
         {
             this.i = i;
             this.j = j;
         }
-
-        public int I { get => i; set => i = value; }
-        public int J { get => j; set => j = value; }
 
         /// <summary>
         /// Method for moving game figure 
